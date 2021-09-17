@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptct-african-marketplace-5-9-16-2021/backend.git"
+  },
+  "author": "john-iannuzzi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptct-african-marketplace-5-9-16-2021/backend/issues"
+  },
+  "homepage": "https://github.com/ptct-african-marketplace-5-9-16-2021/backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "helmet": "^4.6.0",
+    "knex": "^0.95.11",
+    "knex-cleaner": "^1.3.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
