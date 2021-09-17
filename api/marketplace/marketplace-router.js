@@ -1,12 +1,12 @@
 const router = require('express').Router();
+const Market = require('./marketplace-model')
 
-router.get('/test', async (req, res, next) => {
-    try{
-        res.status(200).json({message: "market-router is functioning correctly"})
-    }
-    catch(err){
-        next(err)
-    }
+router.get('/stores', (req, res, next) => {
+   Market.getStores()
+    .then(stores => {
+        res.status(200).json(stores)
+    })
+    .catch(next)
 } )
 
 module.exports = router;
