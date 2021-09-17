@@ -11,8 +11,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-// server.use('/api/auth', authRouter)
-// server.use('/api/market', marketRouter)
+server.use('/api/auth', authRouter)
+server.use('/api/market', marketRouter)
 
 server.use((err, req, res, next) => {
     res.status(err.status || 500).json({
