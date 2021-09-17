@@ -1,11 +1,23 @@
 
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('users').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('users').insert([
-        {username: "admin", password: "testPass"}
-      ]);
-    });
+exports.seed = async function(knex) {
+  await knex('users').truncate()
+  await knex('roles').truncate()
+
+  await knex('roles').insert([
+    {role_name: 'owner'},
+    {role_name: 'user'}
+  ])
+
+  await knex('users').insert([
+    {
+      username: 'testOwner',
+      password: 'testPass',
+      role_id: 1
+    },
+    {
+      username: "testUser",
+      password: "testPass",
+      role_id: 2
+    }
+  ])
 };

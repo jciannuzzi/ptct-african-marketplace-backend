@@ -5,10 +5,16 @@ exports.up = function(knex) {
             users.increments('user_id')
             users.string('username', 128).notNullable().unique()
             users.string('password', 128).notNullable()
+            users.integer('role_id').notNullable()
+        })
+        .createTable('roles', roles => {
+            roles.increments('role_id')
+            roles.string('role_name', 128).notNullable().unique()
         })
 };
 
 exports.down = function(knex) {
     return knex.schema
+    .dropTableIfExists('roles')
     .dropTableIfExists('users')
 };
