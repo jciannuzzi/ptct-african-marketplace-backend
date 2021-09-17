@@ -19,9 +19,36 @@ const getStoreOffers = async (store_id) => {
         Offers: offers
     }
     return store;    
-}           
+}
+
+const findOfferById = (offer_id) => {
+    return db('Offers as O')
+    .join('Products as P', "O.product_id", "P.product_id")
+    .join("Categories as C", "P.cat_id", "C.cat_id")
+    .select('offer_id', 'product_name', 'cat_name', "price")
+    .where('offer_id', offer_id)
+}
+
+const addOffer = async (offer, store_id) =>{
+    
+    const {product_name, price} = offer;
+
+    const [{product_id}] = await db('Products')
+                                    .where('product_name', product_name)
+                                    .select('product_id')
+    const newOfferKeys = {
+        store_id: store_id,
+        product_id: product_id,
+        price: price
+    }
+    const [offer_id] = await db('Offers')
+                                .insert(newOfferKeys)
+    return findOfferById(offer_id)
+}
 
 module.exports = {
     getStores,
-    getStoreOffers
+    getStoreOffers,
+    findOfferById,
+    addOffer
 }

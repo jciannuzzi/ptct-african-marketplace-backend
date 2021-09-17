@@ -10,13 +10,21 @@ router.get('/stores', (req, res, next) => {
     .catch(next)
 } )
 
-//[GET] Store Offers
-router.get('/stores/offers/:id', (req, res, next) => {
+//[GET] Using the store_id, brings up the store name and what products that store is currently offering
+router.get('/stores/:id/offers', (req, res, next) => {
     Market.getStoreOffers(req.params.id)
      .then(offers => {
          res.status(200).json(offers)
      })
      .catch(next)
  } )
+//[POST] Adds a new offer to the store
+ router.post('/stores/:id/offers', (req,res,next) => {
+     Market.addOffer(req.body, req.params.id)
+        .then(offer => {
+            res.status(210).json(offer)
+        })
+        .catch(next)
+ })
 
 module.exports = router;
