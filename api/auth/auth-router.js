@@ -27,13 +27,13 @@ router.post('/register', (req,res,next) => {
 })
 
 //[POST] /login logs in to user using username and password 
-// returns with a web token and user_id
-// you will want to use the returned user_id and token to make sure this user only has access to
-// their respective stores, and not the stores of others
+// returns with a web token that contains user information.
+// you will want to use this information to correctly route
+// and restrict the user on the client side
 router.post('/login', (req, res ,next) => {
     const {username, password} = req.body;
     Users.findUser({username: username})
-            .then((user) => {
+            .then(user => {
                 if(user && bcrypt.compareSync(password, user.password)){
                     const token = makeToken(user)
                     res.status(200).json({
