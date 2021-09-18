@@ -1,10 +1,12 @@
 const db = require('../../data/db-config');
+const Users = require('../auth/auth-model')
 
 const getStores = () => {
     return db('stores')
 }
 
-const getStoresByUser = (user_id) => {
+const getStoresByUser = async (username) => {
+    const {user_id} = await Users.findUser({username: username})
     return db('Stores as S')
                 .join('users as u', 'S.user_id', 'u.user_id')
                 .where('S.user_id', user_id)

@@ -1,18 +1,20 @@
 const Auth = require('../auth/auth-model.js')
 const Market = require('../marketplace/marketplace-model')
-const db = require('../../data/db-config')
+const Users = require('../auth/auth-model')
 
 
 // a middleware to check if the current user is the owner of the store
 const checkIfStoreOwner = async (req,res,next) =>{
-    const {user_id, store_id} = req.params
+    const {username, store_id} = req.params
 
     const store = await Market.findStoreById(store_id)
+    const user = await Users.findUser({username: username})
 
-    if(!store) {
-        res.status(404).json({message: "Store not found"})
+    if(!store || !user) {
+        res.status(404).json({message: "Invalid Store or User"})
     }
-    const checkId = store.user_id    
+    const user_id = user.user_id
+    const checkId = store.user_id   
     if(user_id == checkId) {
             next();
     } 

@@ -12,11 +12,11 @@ router.get('/stores', (req, res, next) => {
     .catch(next)
 } )
 
-//[GET] Using the user_id, this brings up an array all of the selected owner's stores with store_ids
+//[GET] Using the username, this brings up an array all of the selected owner's stores with store_ids
 // example: should return formatted like this [{"store_id": 1 "store_name": "Local Market"}]
 // this should be restricted to owners and users only
-router.get('/user/:user_id/stores', (req, res, next) => {
-    Market.getStoresByUser(req.params.user_id)
+router.get('/user/:username/stores', (req, res, next) => {
+    Market.getStoresByUser(req.params.username)
         .then(stores => {
             res.status(200).json(stores)
         })
@@ -34,7 +34,7 @@ router.get('/stores/:store_id', (req, res, next) => {
  } )
 //[POST] Adds a new offer to the store
 // this should be restricted only to the owner of the respective store
- router.post('/user/:user_id/store/:store_id', checkIfStoreOwner, (req,res,next) => {
+ router.post('/user/:username/store/:store_id', checkIfStoreOwner, (req,res,next) => {
      Market.addOffer(req.body, req.params.store_id)
         .then(offer => {
             res.status(210).json(offer)
