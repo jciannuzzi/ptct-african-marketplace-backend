@@ -26,7 +26,7 @@ router.get('/user/:user_id/stores', (req, res, next) => {
 //[GET] Using the store_id, brings up the store name and what products that store is currently offering
 // this should be restricted to only users and owners
 router.get('/stores/:store_id', (req, res, next) => {
-    Market.findStoreById(req.params.store_id)
+    Market.getStoreOffers(req.params.store_id)
      .then(offers => {
          res.status(200).json(offers)
      })
