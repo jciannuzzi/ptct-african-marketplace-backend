@@ -32,6 +32,7 @@ router.get('/stores/:store_id', (req, res, next) => {
      })
      .catch(next)
  } )
+ 
 //[POST] /api/market/user/:username/store/:store_id Adds a new offer to the store
 // this should be restricted only to the owner of the respective store
  router.post('/user/:username/store/:store_id', checkIfStoreOwner, (req,res,next) => {
