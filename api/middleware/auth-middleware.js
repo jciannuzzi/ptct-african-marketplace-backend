@@ -14,10 +14,17 @@ const restricted = (req,res,next) => {
                 res.status(401).json({message: "Token invalid"})
             } else{
                 req.decodedToken = decoded
-                console.log(decoded)
                 next()
             }
         })
+    }
+}
+const restrictedOwner = (req,res,next) => {
+    const {role_id} = req.decodedToken
+    if(role_id == 1){
+        next();
+    } else{
+        res.status(401).json({message: "Invalid account type"})
     }
 }
 
@@ -58,5 +65,6 @@ const checkIfStoreOwner = async (req,res,next) =>{
 
 module.exports = {
     restricted,
+    restrictedOwner,
     checkIfStoreOwner
 }
