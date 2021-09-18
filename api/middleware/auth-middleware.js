@@ -1,4 +1,3 @@
-const Auth = require('../auth/auth-model.js')
 const Market = require('../marketplace/marketplace-model')
 const Users = require('../auth/auth-model')
 const jwt =  require('jsonwebtoken')
