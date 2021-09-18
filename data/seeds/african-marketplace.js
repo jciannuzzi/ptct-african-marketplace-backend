@@ -1,4 +1,4 @@
-
+const bcrypt = require('bcryptjs')
 exports.seed = async function(knex) {
   //authorization database
   await knex('users').truncate()
@@ -12,17 +12,17 @@ exports.seed = async function(knex) {
   await knex('users').insert([
     {
       username: 'testOwner',
-      password: 'testPass',
+      password: bcrypt.hashSync('testPass', 10),
       role_id: 1
     },
     {
       username: "testUser",
-      password: "testPass",
+      password: bcrypt.hashSync('testPass', 10),
       role_id: 2
     },
     {
       username: "Quark",
-      password: "Odosmells",
+      password: bcrypt.hashSync('odosmells', 10),
       role_id: 1
     }
   ])

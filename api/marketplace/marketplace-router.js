@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Market = require('./marketplace-model')
-const {checkIfStoreOwner} = require('../middleware/auth-middleware')
+const {restricted, checkIfStoreOwner} = require('../middleware/auth-middleware')
 
 //get a list of stores, will probably delete this
 // on the off chacne I don't, this will need to be restricted to owners and users
@@ -35,7 +35,7 @@ router.get('/stores/:store_id', (req, res, next) => {
  
 //[POST] /api/market/user/:username/store/:store_id Adds a new offer to the store
 // this should be restricted only to the owner of the respective store
- router.post('/user/:username/store/:store_id', checkIfStoreOwner, (req,res,next) => {
+ router.post('/stores/:store_id', restricted, checkIfStoreOwner, (req,res,next) => {
      Market.addOffer(req.body, req.params.store_id)
         .then(offer => {
             res.status(210).json(offer)

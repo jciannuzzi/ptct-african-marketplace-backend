@@ -46,14 +46,13 @@ router.post('/login', (req, res ,next) => {
                 }
             })
             .catch(next)
-        
 })
 
 
 //Function to create authorization token
 function makeToken(user){
     const payload = {
-      subject: user.user_id,
+      user_id: user.user_id,
       username: user.username,
       role_id: user.role_id
     }
