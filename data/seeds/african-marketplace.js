@@ -19,6 +19,11 @@ exports.seed = async function(knex) {
       username: "testUser",
       password: "testPass",
       role_id: 2
+    },
+    {
+      username: "Quark",
+      password: "Odosmells",
+      role_id: 1
     }
   ])
 
@@ -30,7 +35,7 @@ exports.seed = async function(knex) {
   await knex('Categories').truncate()
 
   await knex('Stores').insert([
-    {store_name: 'Local Market'}, {store_name: 'Quarks'}    
+    {store_name: 'Local Market', user_id: 1}, {store_name: 'Quarks', user_id: 3}, {store_name: 'International Local Market', user_id:1}    
   ])
   await knex('Offers').insert([
     {store_id: 2, product_id: 2, price: '10.99'}, {store_id: 1, product_id: 3, price: '3.99'}, {store_id: 1, product_id: 1, price: '1.99'}

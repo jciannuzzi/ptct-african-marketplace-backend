@@ -4,6 +4,7 @@ exports.up = function(knex) {
         .createTable('Stores', stores => {
             stores.increments('store_id')
             stores.string('store_name', 255).notNullable().unique()
+            stores.integer('user_id')
         })
         .createTable('Offers', offer => {
             offer.increments('offer_id')

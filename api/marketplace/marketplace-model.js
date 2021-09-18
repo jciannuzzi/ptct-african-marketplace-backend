@@ -4,6 +4,19 @@ const getStores = () => {
     return db('stores')
 }
 
+const getStoresByUser = (user_id) => {
+    return db('Stores as S')
+                .join('users as u', 'S.user_id', 'u.user_id')
+                .where('S.user_id', user_id)
+                .select('store_id', 'store_name')
+}
+
+const findStoreById = (store_id) => {
+    return db('Stores')
+            .where('store_id', store_id)
+            .first();
+}
+
 const getStoreOffers = async (store_id) => {
     const offers = await db('Offers as O')
                             .join("Stores as S", "O.store_id", "S.store_id")
@@ -48,6 +61,8 @@ const addOffer = async (offer, store_id) =>{
 
 module.exports = {
     getStores,
+    getStoresByUser,
+    findStoreById,
     getStoreOffers,
     findOfferById,
     addOffer

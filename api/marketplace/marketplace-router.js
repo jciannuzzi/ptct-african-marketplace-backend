@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const Market = require('./marketplace-model')
+const {checkIfStoreOwner} = require('../middleware/auth-middleware')
 
 //get a list of stores, will probably delete this
+// on the off chacne I don't, this will need to be restricted to owners and users
 router.get('/stores', (req, res, next) => {
    Market.getStores()
     .then(stores => {
@@ -10,17 +12,30 @@ router.get('/stores', (req, res, next) => {
     .catch(next)
 } )
 
+//[GET] Using the user_id, this brings up an array all of the selected owner's stores with store_ids
+// example: should return formatted like this [{"store_id": 1 "store_name": "Local Market"}]
+// this should be restricted to owners and users only
+router.get('/user/:user_id/stores', (req, res, next) => {
+    Market.getStoresByUser(req.params.user_id)
+        .then(stores => {
+            res.status(200).json(stores)
+        })
+        .catch(next)
+})
+
 //[GET] Using the store_id, brings up the store name and what products that store is currently offering
-router.get('/stores/:id/offers', (req, res, next) => {
-    Market.getStoreOffers(req.params.id)
+// this should be restricted to only users and owners
+router.get('/stores/:store_id', (req, res, next) => {
+    Market.findStoreById(req.params.store_id)
      .then(offers => {
          res.status(200).json(offers)
      })
      .catch(next)
  } )
 //[POST] Adds a new offer to the store
- router.post('/stores/:id/offers', (req,res,next) => {
-     Market.addOffer(req.body, req.params.id)
+// this should be restricted only to the owner of the respective store
+ router.post('/user/:user_id/store/:store_id', checkIfStoreOwner, (req,res,next) => {
+     Market.addOffer(req.body, req.params.store_id)
         .then(offer => {
             res.status(210).json(offer)
         })
