@@ -33,11 +33,26 @@ router.get('/stores/:store_id', restricted, (req, res, next) => {
      })
      .catch(next)
  } )
+//[GET] api/market/products Returns a list of all products in the database
+// with respective category names. Should be restricted to owners only
+ router.get('/products', restricted, restrictedOwner, (req,res,next) => {
+     Market.getProducts()
+        .then(prod => {
+            res.status(200).json(prod)
+        })
+        .catch(next)
+ })
 
 //[POST] api/market/stores Adds a new store to the owners account
 // this should be restricted only to business owner accounts
 router.post('/stores', restricted, restrictedOwner, (req,res,next) =>{
-
+    const {store_name} = req.body
+    const {user_id} = req.decodedToken
+    Market.addStore({store_name, user_id})
+        .then(store => {
+            res.status(201).json(store)
+        })
+        .catch(next)
 })
  
 //[POST] api/market/stores/:store_id Adds a new offer to the store
@@ -55,7 +70,7 @@ router.post('/stores', restricted, restrictedOwner, (req,res,next) =>{
             res.status(210).json(offer)
         })
         .catch(next)
-        
+
  })
 
  //[POST] /api/market/products Adds a new product to the database
@@ -65,7 +80,11 @@ router.post('/stores', restricted, restrictedOwner, (req,res,next) =>{
  // schema example: {product_name: Pear, cat_name: Fruit}
  // this actions is restricted to business owners
  router.post('/products', restricted, restrictedOwner, (req,res,next) => {
-
+    Market.addProduct(req.body)
+        .then(product =>{
+            res.status(201).json(product)
+        })
+        .catch(next)
  })
 
 module.exports = router;

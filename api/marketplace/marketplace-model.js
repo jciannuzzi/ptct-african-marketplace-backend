@@ -44,6 +44,12 @@ const findOfferById = (offer_id) => {
     .where('offer_id', offer_id)
 }
 
+const addStore = async (store_name, user_id) => {
+    const [store_id] = await db('Stores')
+                                .insert({store_name, user_id})
+    return findStoreById(store_id);
+}
+
 const addOffer = async (offer, store_id) =>{
     
     const {product_name, price} = offer;
@@ -61,11 +67,50 @@ const addOffer = async (offer, store_id) =>{
     return findOfferById(offer_id)
 }
 
+const getProducts = async() =>{
+    return db('Products as P')
+                .join('Categories as C', 'P.cat_id', "C.cat_id")
+                .select('product_name', 'cat_name')
+                .orderBy('cat_name')
+}
+
+const addProduct = async(product) =>{
+    const{product_name, cat_name} = product
+    console.log(cat_name)
+    const checkCat = await db('Categories')
+                                .where('cat_name', cat_name)
+                                .first();
+    
+    if(!checkCat){
+        const [cat_id] = await db('Categories')
+                                .insert({cat_name})
+        const [product_id] = await db('Products')
+                                    .insert({product_name, cat_id})
+        return db('Products as P')
+                    .join('Categories as C', "P.cat_id", "C.cat_id")
+                    .select("product_name", "cat_name")
+                    .where('P.product_id', product_id)
+    }
+    else{
+        const {cat_id} = checkCat;
+
+        const [product_id] = await db('Products')
+                                    .insert({product_name, cat_id})
+        return db('Products as P')
+                .join('Categories as C', "P.cat_id", "C.cat_id")
+                .select("product_name", "cat_name")
+                .where('P.product_id', product_id)
+    }
+}
+
 module.exports = {
     getStores,
     getStoresByUser,
     findStoreById,
     getStoreOffers,
     findOfferById,
-    addOffer
+    addStore,
+    addOffer,
+    getProducts,
+    addProduct
 }
