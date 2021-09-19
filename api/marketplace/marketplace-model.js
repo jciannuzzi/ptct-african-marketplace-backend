@@ -24,7 +24,7 @@ const getStoreOffers = async (store_id) => {
                             .join("Stores as S", "O.store_id", "S.store_id")
                             .join('Products as P', "O.product_id", "P.product_id")
                             .join("Categories as C", "P.cat_id", "C.cat_id")
-                            .select('product_name', 'cat_name', "price")
+                            .select('offer_id', 'product_name', 'cat_name', "price")
                             .where('O.store_id', store_id)
     const storeName = await db('stores')
                                 .where('store_id', store_id)
@@ -103,6 +103,43 @@ const addProduct = async(product) =>{
     }
 }
 
+const editStore = async (store_id, newName) =>{
+    await db('Stores').where('store_id', store_id).update(newName)
+    return findStoreById(store_id)
+}
+
+const editOffer = async (store_id, offer_id, newOffer) => {
+    const {product_name, price} = newOffer
+
+    const [{product_id}] = await db('Products')
+                                    .where('product_name', product_name)
+                                    .select('product_id')
+    const newOfferKeys = {
+        store_id: store_id,
+        product_id: product_id,
+        price: price
+    }
+    await db('Offers')
+            .update(newOfferKeys)
+
+    return findOfferById(offer_id)
+}
+
+const deleteStore = async (store_id) => {
+    const toBeDelete = await findStoreById(store_id)
+    await db("Stores").where('store_id', store_id).del();
+    await db('Offers').where('store_id', store_id).del();
+    return toBeDelete
+}
+
+const deleteOffer = async (offer_id) => {
+    const toBeDelete = await findOfferById(offer_id)
+    await db('Offers')
+            .where('offer_id', offer_id)
+            .del();
+    return toBeDelete
+}
+
 module.exports = {
     getStores,
     getStoresByUser,
@@ -112,5 +149,9 @@ module.exports = {
     addStore,
     addOffer,
     getProducts,
-    addProduct
+    addProduct,
+    editStore,
+    editOffer,
+    deleteStore,
+    deleteOffer
 }
