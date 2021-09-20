@@ -43,6 +43,11 @@ You will receive a token back for authentication. <br/>
 |  Read  |  GET   | /api/market/stores          | get all stores                    |
 |  Read  |  GET   | /api/market/user/:username/stores  | get all selected owner stores     |
 |  Read  |  GET   | /api/market/stores/:store_id       | get all offers for selected store |
-| Create |  POST  | /api/recipes                | create new recipe                 |
-| Update |  PUT   | /api/recipes/:recipe_id     | edit recipe information           |
-| Delete | DELETE | /api/recipes/:recipe_id     | delete recipe by id               |
+|  Read  |  GET   | /api/market/products        | get all products in database      |
+| Create |  POST  | /api/market/stores          | create new store                  |
+| Create |  POST  | /api/market/stores/:store_id/offers| create new offer in selected store|
+| Create |  POST  | /api/market/products         | create new product and/or category|
+| Update |  PUT   | /api/market/stores/:store_id | edit store information           |
+| Update |  PUT   | /api/market/stores/:store_id/offers/:offer_id | edit offer info |
+| Delete | DELETE | /api/market/stores/:store_id | delete store by id               |
+| Delete | DELETE | /api/market/stores/:store_id/offers/:offer_id | delete offer by store_id and offer_id|
