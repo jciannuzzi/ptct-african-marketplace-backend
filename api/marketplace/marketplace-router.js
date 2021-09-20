@@ -5,7 +5,7 @@ const {validateOffer, validateProduct, validateStore} = require('../middleware/m
 
 //get a list of stores, will probably delete this
 // on the off chacne I don't, this will need to be restricted to owners and users
-router.get('/stores', (req, res, next) => {
+router.get('/stores', restricted, (req, res, next) => {
    Market.getStores()
     .then(stores => {
         res.status(200).json(stores)
