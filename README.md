@@ -48,6 +48,39 @@ You will receive a token back for authentication. <br/>
 | Create |  POST  | /api/market/stores/:store_id/offers| create new offer in selected store|
 | Create |  POST  | /api/market/products         | create new product and/or category|
 | Update |  PUT   | /api/market/stores/:store_id | edit store information           |
-| Update |  PUT   | /api/market/stores/:store_id/offers/:offer_id | edit offer info |
+| Update |  PUT   | /api/market/stores/:store_id/offers/:offer_id | edit offer info using store_id and offer_id |
 | Delete | DELETE | /api/market/stores/:store_id | delete store by id               |
 | Delete | DELETE | /api/market/stores/:store_id/offers/:offer_id | delete offer by store_id and offer_id|
+
+### POST and PUT Data formats
+
+When you send a Post request to /api/market/stores or you send a Put request to /api/market/stores/:store_id format as follows:
+
+```js
+{
+    "store_name": "Local Marketplace"
+}
+```
+
+When you send a Post request to /api/market/stores/:store_id/offers or you send a Put request to /api/market/stores/:store_id/offers/:offer_id format as follows:
+
+```js
+{
+    "product_name": "Milk",
+    "price": 3.99
+    //You can also enter the price as a string as long as it is still numbers
+}
+```
+
+When you send a post request to /api/market/products format as follows:
+
+```js
+{
+    "product_name": "Pear",
+    "cat_name": "Fruit"
+
+    //If the category name already exists in the data base, the product will be assigned that categories cat_id
+    //If the category does not yet exist in the database, a new category will be created and the product will be assigned the resulting cat_id
+}
+```
+
