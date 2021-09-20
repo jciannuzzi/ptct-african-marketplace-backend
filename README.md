@@ -58,7 +58,8 @@ When you send a Post request to /api/market/stores or you send a Put request to 
 
 ```js
 {
-    "store_name": "Local Marketplace"
+    "store_name": "Local Marketplace",
+    "token": token //this is the token you receive from the login
 }
 ```
 
@@ -67,8 +68,8 @@ When you send a Post request to /api/market/stores/:store_id/offers or you send 
 ```js
 {
     "product_name": "Milk",
-    "price": 3.99
-    //You can also enter the price as a string as long as it is still numbers
+    "price": 3.99, //You can also enter the price as a string as long as it is still numbers
+    "token": token //this is the token you receive from the login
 }
 ```
 
@@ -77,7 +78,8 @@ When you send a post request to /api/market/products format as follows:
 ```js
 {
     "product_name": "Pear",
-    "cat_name": "Fruit"
+    "cat_name": "Fruit",
+    "token": token //this is the token you receive from the login
 
     //If the category name already exists in the data base, the product will be assigned that categories cat_id
     //If the category does not yet exist in the database, a new category will be created and the product will be assigned the resulting cat_id
