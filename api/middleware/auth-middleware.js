@@ -1,8 +1,9 @@
 const Market = require('../marketplace/marketplace-model')
-const Users = require('../auth/auth-model')
 const jwt =  require('jsonwebtoken')
 const { JWT_SECRET } = require('../secrets/index.js')
 
+
+//checks to make sure the user is logged in
 const restricted = (req,res,next) => {
     const token = req.headers.authorization
     if(!token){
@@ -18,6 +19,8 @@ const restricted = (req,res,next) => {
         })
     }
 }
+
+//checks to make sure that the user that is logged in is a business owner and not just a regular user
 const restrictedOwner = (req,res,next) => {
     const {role_id} = req.decodedToken
     if(role_id == 1){
