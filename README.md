@@ -54,6 +54,9 @@ You will receive a token back for authentication. <br/>
 
 ### POST and PUT Data formats
 
+All of the following can only be done by business owner accounts. 
+The token you recieve will have the information needed to determine if the logged in User is a business owner or not. <br/>
+
 When you send a Post request to /api/market/stores or you send a Put request to /api/market/stores/:store_id format as follows:
 
 ```js
