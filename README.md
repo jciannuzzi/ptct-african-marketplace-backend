@@ -1,5 +1,5 @@
 # backend
-Backend for Build week ptct-african-marketplace-5 project <br/>
+Backend for ptct-african-marketplace-5 project <br/>
 Base URL = https://frozen-lowlands-84790.herokuapp.com/ <br/>
 
 ### Register Schema
